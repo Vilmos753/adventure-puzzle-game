@@ -42,7 +42,7 @@ public class AnimationStateController : MonoBehaviour
             animator.SetBool(isRunningHash, isRunning);
         }
         
-        if (isRunning && (!Input.GetKey(KeyCode.W) || !Input.GetKey(KeyCode.W)))
+        if (isRunning && (!Input.GetKey(KeyCode.LeftShift) || !Input.GetKey(KeyCode.W)))
         {
             isRunning = false;
             animator.SetBool(isRunningHash, isRunning);
