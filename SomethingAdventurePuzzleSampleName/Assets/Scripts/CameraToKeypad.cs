@@ -1,14 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CameraToKeypad : MonoBehaviour
 {
     private bool isTriggered;
-    public GameObject KeypadCamera;
     public GameObject panel;
     public GameObject character;
+    public GameObject snapToKeypad;
+    public GameObject cameraa;
+    private Vector3 location;
+    [SerializeField] private TextMeshProUGUI useTextMeshPro;
+    [SerializeField] private GameObject snapToCamera;
+    private bool cameraOnKeyPad = false;
+
+    private CodeLock _codeLock;
+    
+
+    private string originalText;
+
     private void OnTriggerEnter(Collider other)
     {
         isTriggered = true;
@@ -20,12 +33,43 @@ public class CameraToKeypad : MonoBehaviour
         panel.SetActive(false);
     }
 
+    private void Start()
+    {
+        location = snapToKeypad.transform.position;
+        originalText = useTextMeshPro.text;
+    }
+    
     private void Update()
     {
-        if (isTriggered && Input.GetKeyDown(KeyCode.E))
+        if (isTriggered && Input.GetKeyDown(KeyCode.E) && !cameraOnKeyPad)
         {
-           KeypadCamera.SetActive(true);
-           character.GetComponent<PlayerMovement>().enabled = false;
+            snapToCodelock();
         }
+
+        if (isTriggered && Input.GetKeyDown(KeyCode.Escape) && cameraOnKeyPad)
+        {
+            snapToPlayer();
+        }
+    }
+
+    public void snapToCodelock()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        character.GetComponent<PlayerMovement>().enabled = false;
+        cameraa.GetComponent<MouseLook>().enabled = false;
+        cameraa.transform.SetPositionAndRotation(location,Quaternion.Euler(new Vector3(0,90,0)));
+        useTextMeshPro.text = "Nyomd meg az Esc-et a kilépéshez";
+        cameraOnKeyPad = true;
+    }
+
+    public void snapToPlayer()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        character.GetComponent<PlayerMovement>().enabled = true;
+        cameraa.GetComponent<MouseLook>().enabled = true;
+        cameraa.transform.SetPositionAndRotation(snapToCamera.transform.position,Quaternion.Euler(new Vector3(0,90,0)));
+        useTextMeshPro.text = originalText;
+        cameraOnKeyPad = false;
+        Debug.Log("ASD" + _codeLock.codePass);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CodeLock : MonoBehaviour
@@ -11,7 +12,10 @@ public class CodeLock : MonoBehaviour
     public string code;
     public string attemptedCode;
 
+    [SerializeField] private TextMeshPro screenText;
     public Transform toOpen;
+
+    public bool codePass;
 
     private void Start()
     {
@@ -22,31 +26,25 @@ public class CodeLock : MonoBehaviour
     {
         if (attemptedCode == code)
         {
-            StartCoroutine(Open());
+            screenText.text = "Jó";
+            toOpen.Rotate(new Vector3(0, 90, 0), Space.World);
+            codePass = true;
         }
         else
         {
-            Debug.Log("Rossz kód");
+            screenText.text = "Rossz";
         }
-    }
-
-    IEnumerator Open()
-    {
-        toOpen.Rotate(new Vector3(0, 90, 0), Space.World);
-
-        yield return new WaitForSeconds(4);
-        
-        toOpen.Rotate(new Vector3(0, -90, 0), Space.World);
     }
 
     public void SetValue(string value)
     {
-        Debug.Log(value);
+        
         placeInCode++;
 
         if (placeInCode <= codeLength)
         {
             attemptedCode += value;
+            screenText.text = attemptedCode;
         }
 
         if (placeInCode == codeLength)
