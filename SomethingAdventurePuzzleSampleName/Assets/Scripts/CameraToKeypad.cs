@@ -17,8 +17,6 @@ public class CameraToKeypad : MonoBehaviour
     [SerializeField] private GameObject snapToCamera;
     private bool cameraOnKeyPad = false;
 
-    private CodeLock _codeLock;
-    
 
     private string originalText;
 
@@ -70,6 +68,10 @@ public class CameraToKeypad : MonoBehaviour
         cameraa.transform.SetPositionAndRotation(snapToCamera.transform.position,Quaternion.Euler(new Vector3(0,90,0)));
         useTextMeshPro.text = originalText;
         cameraOnKeyPad = false;
-        Debug.Log("ASD" + _codeLock.codePass);
+        panel.SetActive(false);
+        if (CodeLock.codePass)
+        {
+            Destroy(this);
+        }
     }
 }

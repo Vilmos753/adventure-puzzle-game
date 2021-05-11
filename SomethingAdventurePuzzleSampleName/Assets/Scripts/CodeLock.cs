@@ -15,7 +15,7 @@ public class CodeLock : MonoBehaviour
     [SerializeField] private TextMeshPro screenText;
     public Transform toOpen;
 
-    public bool codePass;
+    public static bool codePass;
 
     private void Start()
     {
