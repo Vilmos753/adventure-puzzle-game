@@ -7,9 +7,9 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
 
-    float speed = 3f;
+    public static float speed = 3f;
     public float gravity = -9.81f;
-    public float jumpHeight = 3;
+    public static float jumpHeight = 1.5f;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -17,7 +17,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 velocity;
     private bool isGrounded;
-    private bool isRunning = false;
+    private bool isRunning;
+    public static bool isFullyInWater;
+    
     void Update()
     {
 
@@ -47,10 +49,39 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(move * (speed * Time.deltaTime));
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (jumpHeight == 0)
         {
+            gravity = 0;
+            if (isFullyInWater)
+            {
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    velocity.y = 1f;
+                }
+                else
+                {
+                    velocity.y = 0f;
+                }
+            }
+            else
+            {
+                velocity.y = 0f;
+            }
             
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                velocity.y = -1f;
+            }
+            
+        }
+        else
+        {
+            gravity = -9.81f;
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+            
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            } 
         }
 
         velocity.y += gravity * Time.deltaTime;
