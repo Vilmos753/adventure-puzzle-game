@@ -17,7 +17,7 @@ public class WaterRise : MonoBehaviour
     private void Start()
     {
         position = transform.position;
-        target = position.y + 3;
+        target = position.y + 6.79f;
     }
 
     private void Update()
