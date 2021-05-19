@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class Coloring : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Material mat;
+    [SerializeField] private TextMeshPro redString;
+    [SerializeField] private TextMeshPro greenString;
+    [SerializeField] private TextMeshPro blueString;
+
+    private float red;
+    private float green;
+    private float blue;
+
     void Start()
     {
-        
+        mat = GetComponent<Renderer>().materials[1];
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        red = float.Parse(redString.text);
+        green = float.Parse(greenString.text);
+        blue = float.Parse(blueString.text);
+
+        mat.SetColor("_EmissionColor", new Color(red/255f, green/255f, blue/255f));
     }
 }

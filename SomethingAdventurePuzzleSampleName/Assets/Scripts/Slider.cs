@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,7 +13,8 @@ public class Slider : MonoBehaviour
     private Vector3 v3DownPos;   // Initial position of the mouse in world coordinates
     private float fZMap; // Base Z distance to use in conversion
     // minimum 0 és max 25
-    
+    private float unit = (255f/-25f);
+    [SerializeField] private TextMeshPro value;
     private void OnMouseDown()
     {
         v3StartPos = transform.localPosition;
@@ -22,8 +24,6 @@ public class Slider : MonoBehaviour
         v3DownPos = Camera.main.ScreenToWorldPoint(v3DownPos);
     }
     
-    
-
     private void OnMouseDrag(){
         Vector3 v3T = new Vector3(Input.mousePosition.x, Input.mousePosition.y, fZMap);
         v3T = Camera.main.ScreenToWorldPoint(v3T);
@@ -43,8 +43,10 @@ public class Slider : MonoBehaviour
             v3T2.z = -25;
         }
 
-        
-         
+        float number = Mathf.Round(unit * v3T2.z);
+
+        value.text = number+"";
+
         transform.localPosition = v3T2; 
         
     }
