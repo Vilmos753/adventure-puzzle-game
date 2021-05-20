@@ -11,6 +11,8 @@ public class Coloring : MonoBehaviour
     [SerializeField] private TextMeshPro greenString;
     [SerializeField] private TextMeshPro blueString;
 
+    public static Color color;
+
     private float red;
     private float green;
     private float blue;
@@ -24,7 +26,7 @@ public class Coloring : MonoBehaviour
         red = float.Parse(redString.text);
         green = float.Parse(greenString.text);
         blue = float.Parse(blueString.text);
-
-        mat.SetColor("_EmissionColor", new Color(red/255f, green/255f, blue/255f));
+        color = new Color(red / 255f, green / 255f, blue / 255f);
+        mat.SetColor("_EmissionColor", color);
     }
 }
