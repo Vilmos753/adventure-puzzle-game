@@ -1,5 +1,5 @@
 # adventure-puzzle-game
-Egy Játék. Pont.
+Fontos: A Build egy zipben van mert alapból túl nagy lenne a projekt pushra
 
 A játékban csak tutoriálszintek vannak azaz minden funkcionalitást ki lehet próbálni de sajnos csak tutorial van.
 Az irányítás standard: WASD illetve úszásnál a vízben felfelé space lenyomásával lehet menni, lefele pedig shift.
