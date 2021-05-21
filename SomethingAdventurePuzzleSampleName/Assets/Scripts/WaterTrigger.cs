@@ -10,14 +10,11 @@ public class WaterTrigger : MonoBehaviour
     [SerializeField] private TextMeshProUGUI useTextMeshPro;
     [SerializeField] private Transform doorToClose;
     public WaterRise waterRise;
-    void Start()
-    {
-        useTextMeshPro.text = "Nyomd meg az E-t";
-    }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         isTriggered = true;
+        useTextMeshPro.text = "Nyomd meg az E-t hogy használd a gombot";
         panel.SetActive(true);
     }
     private void OnTriggerExit(Collider other)

@@ -7,8 +7,8 @@ public class Colormix : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     private bool isTriggered;
-    private bool isPressed = false;
-    private bool animationStarted = false;
+    public static bool isPressed = false;
+    public static bool animationRunning = false;
 
     [SerializeField] private GameObject kevero;
     [SerializeField] private GameObject channel1;
@@ -41,9 +41,9 @@ public class Colormix : MonoBehaviour
             }
         }
 
-        if (isPressed && !animationStarted)
+        if (isPressed && !animationRunning)
         {
-            animationStarted = true;
+            animationRunning = true;
 
             kevero.GetComponent<Renderer>().material.SetColor("_EmissionColor", Coloring.color);
             channel1.GetComponent<Renderer>().material.SetColor("_EmissionColor", Coloring.color);
@@ -168,8 +168,9 @@ public class Colormix : MonoBehaviour
             
             while (ajtoElapsedTime < ajtoWaitTime)
             {
-                ajto1.transform.rotation = Quaternion.Lerp(ajtoRotation, ajtoRotationDest, (ajtoElapsedTime / ajtoWaitTime));
+                ajto1.transform.rotation = Quaternion.RotateTowards(ajtoRotation, Quaternion.Euler(0, -90, 0), 90*(ajtoElapsedTime/ajtoWaitTime));
                 ajtoElapsedTime += Time.deltaTime;
+                yield return null;
             }
                 
         }
@@ -201,7 +202,6 @@ public class Colormix : MonoBehaviour
         {
             lampa2.GetComponent<Renderer>().materials[1].SetColor("_EmissionColor", Color.red);
         }
-        
         
         yield return null;
     }
